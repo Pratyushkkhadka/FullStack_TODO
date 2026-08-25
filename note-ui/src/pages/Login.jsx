@@ -1,5 +1,5 @@
 import { useState, useContext } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { AuthContext } from "../Context/AuthContext";
 import apiClient from "../Api/ApiClient";
 
@@ -18,7 +18,6 @@ export default function Login() {
     setError("");
 
     try {
-      // Sends 'identifier' which handles email or username
       const res = await apiClient.post("/auth/login", { identifier, password });
       login(res.data);
       navigate("/");
@@ -46,7 +45,7 @@ export default function Login() {
             <input
               className="input-field"
               type="text"
-              placeholder="Username or email"
+              placeholder="e.g. admin1 or user@example.com"
               value={identifier}
               onChange={(e) => setIdentifier(e.target.value)}
               required
@@ -58,7 +57,7 @@ export default function Login() {
             <input
               className="input-field"
               type="password"
-              placeholder="••••"
+              placeholder="••••••••"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
@@ -69,6 +68,15 @@ export default function Login() {
             {loading ? "Logging in..." : "Login"}
           </button>
         </form>
+
+        <div className="auth-footer" style={{ marginTop: "1rem", textAlign: "center" }}>
+          <p style={{ color: "rgba(255, 255, 255, 0.6)" }}>
+            Don't have an account?{" "}
+            <Link to="/signup" style={{ color: "#a855f7", textDecoration: "none" }}>
+              Create an account
+            </Link>
+          </p>
+        </div>
       </div>
     </div>
   );
